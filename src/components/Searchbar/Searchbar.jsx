@@ -1,47 +1,25 @@
-import { toast } from 'react-toastify';
-import { Component } from 'react';
-import { ImSearch } from 'react-icons/im';
-import { SearchHeader } from './SearchBar.styled';
+import propTypes from 'prop-types';
+import css from './SearchBar.module.css';
 
-export class Searchbar extends Component {
-  state = {
-    name: '',
-  };
+export const Searchbar = ({ onSubmit }) => (
+  <header className={css.Searchbar}>
+    <form className={css.SearchForm} onSubmit={onSubmit}>
+      <button type="submit" className={css.SearchFormButton}>
+        <span className={css.SearchFormButtonLabel}>Search</span>
+      </button>
 
-  handleNameChange = event => {
-    this.setState({ name: event.currentTarget.value.toLowerCase() });
-  };
+      <input
+        name="inputForSearch"
+        className={css.SearchFormInput}
+        type="text"
+        autoComplete="off"
+        autoFocus
+        placeholder="Search images and photos"
+      />
+    </form>
+  </header>
+);
 
-  hendleSubmit = event => {
-    event.preventDefault();
-
-    if (this.state.name.trim() === '') {
-      return toast.error('Введите имя');
-    }
-
-    this.props.qwe(this.state.name);
-    this.setState({ name: '' });
-  };
-
-  render() {
-    return (
-      <SearchHeader>
-        <form className="form" onSubmit={this.hendleSubmit}>
-          <button type="submit" className="button">
-            <ImSearch color="grey" />
-          </button>
-
-          <input
-            className="input"
-            type="text"
-          
-            value={this.state.name}
-            onChange={this.handleNameChange}
-           
-            placeholder="Search images and photos"
-          />
-        </form>
-      </SearchHeader>
-    );
-  }
-}
+Searchbar.propTypes = {
+  onSubmit: propTypes.func,
+};

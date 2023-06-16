@@ -1,34 +1,16 @@
-import React, { Component } from "react"
-import { Overlay, Modal } from "./Modal.styled"
+import css from './Modal.module.css';
+import propTypes from 'prop-types';
 
+export const Modal = ({ src, alt, handleClose }) => (
+  <div className={css.Overlay} onClick={handleClose}>
+    <div className={css.Modal}>
+      <img src={src} alt={alt} />
+    </div>
+  </div>
+);
 
-export class ModalImage extends Component {
-    componentDidMount() {
-        window.addEventListener('keydown', this.handleKeyDown);
-      }
-
-    componentWillUnmount (){
-        window.removeEventListener('keydown', this.handleKeyDown);
-    }
-    
-    handleKeyDown = event => {
-        if (event.code === 'Escape') {
-          this.props.onClose();
-        }
-      };
-
-      handleOverlayClick = event => {
-        if (event.currentTarget === event.target) {
-          this.props.onClose();
-        }
-      };
-
-    render () {
-        
-        return (
-            <Overlay onClick={this.handleOverlayClick}>
-            <Modal>{this.props.children}</Modal>
-            </Overlay>    
-        )
-    }
-}
+Modal.propTypes = {
+  src: propTypes.string.isRequired,
+  alt: propTypes.string.isRequired,
+  handleClose: propTypes.func.isRequired,
+};

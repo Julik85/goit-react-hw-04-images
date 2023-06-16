@@ -1,25 +1,18 @@
-import React from 'react';
-import { GalleryItem } from './ImageGalleryItem.styled';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
+import css from './ImageGalleryItem.module.css';
 
-export function ImageGalleryItem({ webformatURL, tags, largeImage, onClick }) {
-  
-     return (
-    <GalleryItem>
-      <img 
-      className="galleryImg"
-      src={webformatURL} 
-      alt={tags}
-      onClick={() => onClick(largeImage, tags)}
-      loading="lazy"
-       />
-      
-    </GalleryItem>
-  );
-}
+export const ImageGalleryItem = ({ image, onclick }) => (
+  <li className={css.ImageGalleryItem} id={image.id} onClick={onclick}>
+    <img
+      src={image.webformatURL}
+      alt={image.tags}
+      name={image.largeImageURL}
+      className={css.ImageGalleryItemImage}
+    />
+  </li>
+);
 
 ImageGalleryItem.propTypes = {
-  webformatURL: PropTypes.string.isRequired,
-  tags: PropTypes.string.isRequired,
-
-}
+  image: propTypes.object.isRequired,
+  onclick: propTypes.func.isRequired,
+};
